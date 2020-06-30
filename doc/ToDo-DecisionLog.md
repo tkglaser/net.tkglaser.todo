@@ -12,10 +12,13 @@ The application is made up of the following components
 
 * Web UI
 * Identity provider
+* API Management
 * API
 * Database
 
 ## Web UI
+
+### Web UI Decisions
 
 *Decision*: The web UI is implemented as a Single Page Application (SPA).
 
@@ -45,3 +48,32 @@ The application is made up of the following components
 * **Availability and SLA**
   * Once again Azure CDN is the component under stress and is the only one that needs to be considered.
   * Microsoft gives a financially backed SLA for Azure CDN of 99.9% which allows a down time of 8.7h per year. However, I could not find any reports that the Azure CDN has ever been down.
+
+## Identity Provider
+
+### Identity Provider Decisions
+
+*Decision*: To solve authentication and authorization, an external Identity Provider shall be used.
+
+* This provides better security because a third party IDP is expected to be developed by experts and regularly audited for security and regulatory compliance.
+* If all personal data is stored in an external IDP, certain legal concerns like GDPR do not apply to the application.
+* A faster time to market can be achieved by not having to implement authentication flows and data storage.
+
+*Decision*: Azure Active Directory B2C shall be used as the external Identity Provider.
+
+* Azure AD B2C is the product intended by Microsoft for this use case.
+* It can integrate with other public IPDs like Google, Facebook, Twitter and other external Active Directories, so there is plenty of flexibility going forward.
+* It fits into the proposed solution because it can integrate with a Single Page Application and a back end API.
+
+### Identity Provider Quality Attributes
+
+* **Scalability**
+  * Azure AD B2C is automatically scaling to demand and supports millions of users and billions of authentications per day.
+* **Security**
+  * Azure AD B2C is built to the latest security standards including multi-factor authentication.
+* **Performance**
+  * Azure AD B2C automatically scales to demand to ensure best performance at all times.
+* **Cost**
+  * Pricing is per active user. The first 50,000 users are free. Every additional monthly active user costs about £0.004.
+* **Availability and SLA**
+  * Microsoft gives a financially backed SLA for Azure AD B2C of 99.9% which allows a down time of 8.7h per year. However, I could not find any reports that the Azure AD B2C has ever been down.
