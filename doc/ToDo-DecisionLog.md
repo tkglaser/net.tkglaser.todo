@@ -31,13 +31,17 @@ The application is made up of the following components
 
 ### Web UI Quality Attributes
 
-* Scalability
+* **Scalability**
   * Azure CDN is the component that will serve requests even if the underlying infrastructure experiences an outage. Therefore only Azure CDN will be considered here
   * Azure CDN has global scalability built in.
-* Security
+* **Security**
   * Azure CDN does not run any code directly, therefore only the control plane needs to be considered.
   * The Azure CDN Control Plane is integrated with the Azure Portal which is considered secure
-* Performance
+* **Performance**
   * Azure CDN is designed for performance. It is a global network of edge locations that can handle massive amounts of requests.
-* Cost
-  * The cost for Azure CDN is consumption based.
+* **Cost**
+  * The cost for Azure CDN is consumption based. For example 1GB of traffic costs between £0.06 and £0.17 depending on the traffic region.
+  * The cost to host an Azure Storage Static Website is divided into amount of data stored (ca. £0.014 per GB and month) and data delivered (ca. £0.004 per 100000 reads and £0.044 per 100000 writes). However, there will be very few writes (only for deployments) and the reads are buffered by the CDN so there will be very few as well. For all practical purposes, the cost for Azure Storage is negligible and can be ignored.
+* **Availability and SLA**
+  * Once again Azure CDN is the component under stress and is the only one that needs to be considered.
+  * Microsoft gives a financially backed SLA for Azure CDN of 99.9% which allows a down time of 8.7h per year. However, I could not find any reports that the Azure CDN has ever been down.
